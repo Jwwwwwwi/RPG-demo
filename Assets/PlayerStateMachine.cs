@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.PlayerLoop;
 
+// 玩家状态机，控制状态变化
 public class PlayerStateMachine 
 {
     public PlayerState currentState {get; private set;}

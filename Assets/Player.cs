@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    // 设置状态机和初始状态
     private void Awake()
     {
         stateMachine = new PlayerStateMachine();
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
     }
 
+    // 获取动画组件和刚体组件，状态机初始化
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -63,6 +65,7 @@ public class Player : MonoBehaviour
         stateMachine.Initialize(idleState);
     }
 
+    
     private void Update()
     {
         stateMachine.currentState.Update();
@@ -70,6 +73,7 @@ public class Player : MonoBehaviour
         
     }
 
+    // 设置玩家速度
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
         rb.velocity = new Vector2(_xVelocity, _yVelocity);
@@ -77,9 +81,11 @@ public class Player : MonoBehaviour
     }
 
 
+    // 地面检测和墙体检测
     public bool ISGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
     public bool ISWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
     
+    // 绘制辅助线
     private void OnDrawGizmos(){
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + facingDir * wallCheckDistance, wallCheck.position.y));
@@ -92,6 +98,7 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
+    // 控制角色翻转
     public void FlipController(float _x)
     {
         if (_x > 0 && !facingRight)
@@ -104,10 +111,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    // 冲刺检测
     public void CheckForDashInput()
     {
         dashUsageTimer -= Time.deltaTime;
 
+        // 在墙边无法冲刺
+        if (ISWallDetected())
+            return;
+        
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0)
         {
             dashUsageTimer = dashCooldown;
