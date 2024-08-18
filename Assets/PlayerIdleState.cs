@@ -13,7 +13,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocity(0, 0); 
+        player.ZeroVelocity();
     }
 
     public override void Exit()
@@ -28,7 +28,7 @@ public class PlayerIdleState : PlayerGroundState
         if (xInput == player.facingDir && player.ISWallDetected())
             return;
 
-        if (xInput != 0)
+        if (xInput != 0 && !player.isBusy)
         {
             stateMachine.ChangeState(player.moveState);
         }
