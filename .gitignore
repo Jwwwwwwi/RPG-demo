@@ -1,0 +1,26 @@
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/Properties/launchSettings.json
+
+
+# Current_Package folder
+/ProjectSettings/
+/Temp/
+/UserSettings/
+/Packages/
+/Logs/
+/Library/
+
+
+# Visual Studio Code directory
+/.vscode/
+
+
+*.csproj
+*.meta
+*.sln
+
+
