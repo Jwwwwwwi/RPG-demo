@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 主摄像机的控制，视差特效，看起来更加平滑
+// 背景相对主摄像机的移动，视差特效，看起来更加平滑
 public class ParallaxBackground : MonoBehaviour
 {
     private GameObject cam;
