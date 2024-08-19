@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     public PlayerWallSlideState wallSlideState {get; private set;}
     public PlayerWallJumpState wallJumpState {get; private set;}
     public PlayerDashState dashState {get; private set;}
-    public PlayerPrimaryAttack primaryAttack {get; private set;}
+    public PlayerPrimaryAttackState primaryAttack {get; private set;}
 
     #endregion
 
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         dashState = new PlayerDashState(this, stateMachine, "Dash");
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
-        primaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
+        primaryAttack = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
     }
 
     // 获取动画组件和刚体组件，状态机初始化

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 玩家攻击状态
-public class PlayerPrimaryAttack : PlayerState
+public class PlayerPrimaryAttackState : PlayerState
 {
     // 连击计数
     private int comboCounter;
     private float lastTimeAttack;
     private float comboWindow = .5f;
 
-    public PlayerPrimaryAttack(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public PlayerPrimaryAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }
 
@@ -21,7 +21,13 @@ public class PlayerPrimaryAttack : PlayerState
             comboCounter = 0;
         player.anim.SetInteger("ComboCounter", comboCounter);
 
-        player.SetVelocity(player.attackMovement[comboCounter].x * player.facingDir, player.attackMovement[comboCounter].y);
+        #region Choose attack direction
+        float attackDir = player.facingDir;
+        if (xInput != 0)
+            attackDir = xInput;
+        #endregion
+
+        player.SetVelocity(player.attackMovement[comboCounter].x * attackDir, player.attackMovement[comboCounter].y);
 
         stateTimer = .1f;
     }
