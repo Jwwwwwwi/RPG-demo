@@ -9,6 +9,7 @@ public class EnemyState
 {
     protected EnemyStateMachine stateMachine;
     protected Enemy enemy;
+    protected Rigidbody2D rb;
 
     private string animBoolname;
 
@@ -25,6 +26,7 @@ public class EnemyState
     public virtual void Enter()
     {
         triggerCalled = false;
+        rb = enemy.rb;
         enemy.anim.SetBool(animBoolname, true);
     }
 
@@ -36,5 +38,10 @@ public class EnemyState
     public virtual void Update()
     {
         stateTimer -= Time.deltaTime;
+    }
+
+    public virtual void AnimationFinishTrigger()
+    {
+        triggerCalled = true;
     }
 }
