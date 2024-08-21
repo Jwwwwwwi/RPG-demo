@@ -10,6 +10,7 @@ public class Player : Entity
 {
     [Header("Attack details")]
     public Vector2[] attackMovement;
+    public float counterAttackDuration = .2f;
 
 
     [Header("Move info")]
@@ -35,6 +36,7 @@ public class Player : Entity
     public PlayerWallJumpState wallJumpState {get; private set;}
     public PlayerDashState dashState {get; private set;}
     public PlayerPrimaryAttackState primaryAttack {get; private set;}
+    public PlayerCounterAttackState counterAttack {get; private set;}
     #endregion
 
     // 设置状态机和初始状态
@@ -49,6 +51,7 @@ public class Player : Entity
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
         primaryAttack = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+        counterAttack = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
     }
 
     // 状态机初始化

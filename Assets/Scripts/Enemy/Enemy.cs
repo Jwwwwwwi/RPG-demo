@@ -14,6 +14,9 @@ public class Enemy : Entity
     [Header("Stunned info")]
     public float stunDuration;
     public Vector2 stunDirection;
+    // 反击窗口
+    protected bool canBeStunned;
+    [SerializeField] protected GameObject counterImage;
     
     [Header("Move innfo")]
     public float moveSpeed;
@@ -52,5 +55,27 @@ public class Enemy : Entity
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance * facingDir, transform.position.y));
+    }
+
+    public virtual void OpenCounterAttackWindow()
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+
+    public virtual bool CanBeStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+        return false;
     }
 }

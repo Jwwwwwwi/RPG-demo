@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 动画触发器事件
 public class EnemySkeletonAnimationTriggers : MonoBehaviour
 {
     private EnemySkeleton enemySkeleton => GetComponentInParent<EnemySkeleton>();
@@ -11,6 +12,7 @@ public class EnemySkeletonAnimationTriggers : MonoBehaviour
         enemySkeleton.AnimationFinishTrigger();
     }
 
+    // 受击检测，造成伤害
     private void AttackTrigger()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(enemySkeleton.attackCheck.position, enemySkeleton.attackCheckRadius);
@@ -21,4 +23,9 @@ public class EnemySkeletonAnimationTriggers : MonoBehaviour
                 hit.GetComponent<Player>().Damage();
         }
     }
+
+    // 开启关闭允许反击窗口
+    private void OpenCounterAttackWindow() => enemySkeleton.OpenCounterAttackWindow();
+    private void CloseCounterAttackWindow() => enemySkeleton.CloseCounterAttackWindow();
+
 }

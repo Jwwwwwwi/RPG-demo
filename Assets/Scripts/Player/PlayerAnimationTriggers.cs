@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 动画触发器事件
 public class PlayerAnimationTriggers : MonoBehaviour
 {
    private Player player => GetComponentInParent<Player>();
