@@ -1,20 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // 为了复用敌人和玩家的代码抽象出来的实体类，描述两者相同的行为
 public class Entity : MonoBehaviour
 {
     [Header("Collision info")]
+    public Transform attackCheck;
+    public float attackCheckRadius;
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected Transform wallCheck;
     [SerializeField] protected float wallCheckDistance;
     [SerializeField] protected LayerMask whatIsGround;
 
+    [Header("Knockback info")]
+    [SerializeField] protected Vector2 knockbackDirection;
+    [SerializeField]protected float knockbackDuration;
+    protected bool isKnock;
+
     #region Components
     public Animator anim {get; private set;}
     public Rigidbody2D rb {get; private set;}
+    public EntityFX fx {get; private set;}
     #endregion
 
     public int facingDir {get; private set;} = 1;
@@ -30,11 +39,28 @@ public class Entity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        fx = GetComponent<EntityFX>();
     }
 
     protected virtual void Update()
     {
 
+    }
+
+    public virtual void Damage()
+    {
+        fx.StartCoroutine("FlashFX");
+        StartCoroutine("HitKnockback");
+        Debug.Log(gameObject.name + "was damaged!");
+    }
+
+    protected virtual IEnumerator HitKnockback()
+    {
+        isKnock = true;
+        rb.velocity = new Vector2(knockbackDirection.x * -facingDir, knockbackDirection.y);
+
+        yield return new WaitForSeconds(knockbackDuration);
+        isKnock = false;
     }
 
     #region Collision
@@ -46,6 +72,7 @@ public class Entity : MonoBehaviour
     protected virtual void OnDrawGizmos(){
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + facingDir * wallCheckDistance, wallCheck.position.y));
+        Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
     }
     #endregion
 
@@ -73,10 +100,18 @@ public class Entity : MonoBehaviour
 
     #region Velocity
     // 设置实体速度
-    public void SetZeroVelocity() => rb.velocity = new Vector2(0, 0);
+    public void SetZeroVelocity() 
+    {
+        if (isKnock)
+            return;
+        rb.velocity = new Vector2(0, 0);    
+    } 
     
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
+        if (isKnock)
+            return;
+
         rb.velocity = new Vector2(_xVelocity, _yVelocity);
         FlipController(_xVelocity);
     }

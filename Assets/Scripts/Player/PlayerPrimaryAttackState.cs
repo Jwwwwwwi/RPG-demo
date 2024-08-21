@@ -22,9 +22,12 @@ public class PlayerPrimaryAttackState : PlayerState
         player.anim.SetInteger("ComboCounter", comboCounter);
 
         #region Choose attack direction
+        xInput = Input.GetAxisRaw("Horizontal"); // 修复攻击方向上的bug，有时会读到之前的输入导致攻击反向，因此重新读入，如果设置为0会导致无法在攻击间隔中转向
         float attackDir = player.facingDir;
         if (xInput != 0)
+        {
             attackDir = xInput;
+        }
         #endregion
 
         player.SetVelocity(player.attackMovement[comboCounter].x * attackDir, player.attackMovement[comboCounter].y);

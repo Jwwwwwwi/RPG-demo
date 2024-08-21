@@ -34,8 +34,17 @@ public class SkeletonBattleState : EnemyState
             stateTimer = enemySkeleton.battleTime;
             if (enemySkeleton.IsPlayerDetected().distance < enemySkeleton.attackDistance && enemySkeleton.IsPlayerDetected().distance > 0)
             {
+                
                 if (CanAttack())
+                {
                     stateMachine.ChangeState(enemySkeleton.attackState);
+                }
+                else
+                {
+                    // 在攻击间隔之间不会继续靠近玩家
+                    enemySkeleton.SetZeroVelocity();
+                    return;
+                }
             }
         }
         else
