@@ -27,6 +27,6 @@ public class Skill : MonoBehaviour
 
     public virtual void UseSkill()
     {
-        // 技能特殊效果
+        // 技能具体效果由子类复写
     }
 }
