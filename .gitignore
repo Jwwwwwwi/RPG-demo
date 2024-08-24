@@ -13,7 +13,6 @@
 
 
 *.csproj
-*.meta
 *.sln
 
 
