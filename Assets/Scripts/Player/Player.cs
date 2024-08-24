@@ -25,6 +25,7 @@ public class Player : Entity
     public bool isBusy {get; private set;}
 
     public SkillManager skill {get; private set;}
+    public GameObject sword {get; private set;}
 
     #region States
     public PlayerStateMachine stateMachine {get; private set;}
@@ -37,6 +38,8 @@ public class Player : Entity
     public PlayerDashState dashState {get; private set;}
     public PlayerPrimaryAttackState primaryAttack {get; private set;}
     public PlayerCounterAttackState counterAttack {get; private set;}
+    public PlayerAimSwordState aimSwordState {get; private set;}
+    public PlayerCatchSwordState catchSwordState {get; private set;}
     #endregion
 
     // 设置状态机和初始状态
@@ -52,6 +55,8 @@ public class Player : Entity
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
         primaryAttack = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
         counterAttack = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
+        aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
+        catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
     }
 
     // 状态机初始化
@@ -69,6 +74,16 @@ public class Player : Entity
         stateMachine.currentState.Update();
         CheckForDashInput();
         
+    }
+
+    public void AssignNewSword(GameObject _newsword)
+    {   
+        sword = _newsword;
+    }
+
+    public void ClearTheSword()
+    {
+        Destroy(sword);
     }
 
     public IEnumerator BusyFor(float _seconds)

@@ -16,6 +16,7 @@ public class CloneSkillController : MonoBehaviour
 
     public void SetupClone(Transform _newtransform, float _cloneDuration, bool _canAttack)
     {
+        
         if (_canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1,4));
         transform.position = _newtransform.position;
