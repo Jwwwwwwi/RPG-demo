@@ -39,6 +39,7 @@ public class EnemySkeleton : Enemy
         
     }
 
+    // 对于骷髅敌人，被反击之后直接进入stun状态
     public override bool CanBeStunned()
     {
         if (base.CanBeStunned())

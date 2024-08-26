@@ -34,7 +34,7 @@ public class PlayerCounterAttackState : PlayerState
             {
                 if (hit.GetComponent<Enemy>().CanBeStunned())
                 {
-                    stateTimer = 10; // 大于1的数即可
+                    stateTimer = 10; // 大于1的数即可，保证成功反击动画播放结束由动画触发器退出
                     player.anim.SetBool("SuccessfulCounterAttack", true);
 
                 }

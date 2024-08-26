@@ -814,7 +814,7 @@ MonoBehaviour:
   attackCheck: {fileID: 1849202059}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 168017691}
-  groundCheckDistance: 0.4
+  groundCheckDistance: 1
   wallCheck: {fileID: 1105934833}
   wallCheckDistance: 0.8
   whatIsGround:
@@ -11315,14 +11315,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  swordType: 2
-  bounceAmount: 0
-  bounceGravity: 5
+  swordType: 0
+  bounceAmount: 4
+  bounceGravity: 1
+  bounceSpeed: 20
   pierceAmount: 2
   pierceGravity: 1
+  hitCooldown: 0.35
+  maxTravelDistance: 7
+  spinDuration: 2
+  spinGravity: 1
   swordPrefab: {fileID: 4731234422004279589, guid: a3a39867f42916a46932bd2c56d46a84, type: 3}
   launchForce: {x: 35, y: 25}
   swordGravity: 4.5
+  freezeTimeDuration: 1.5
+  returnSpeed: 15
   numberOfDots: 20
   spaceBetweendots: 0.07
   dotPrefab: {fileID: 6031014646884959008, guid: 4b504b727095bc14ead55f839a2fc045, type: 3}
@@ -11652,7 +11659,7 @@ MonoBehaviour:
   attackCheck: {fileID: 357623039}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 1474364722}
-  groundCheckDistance: 0.4
+  groundCheckDistance: 1
   wallCheck: {fileID: 1053624573}
   wallCheckDistance: 0.8
   whatIsGround:
@@ -12262,7 +12269,7 @@ MonoBehaviour:
   attackCheck: {fileID: 948510516}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 344257494}
-  groundCheckDistance: 0.4
+  groundCheckDistance: 1
   wallCheck: {fileID: 2142518828}
   wallCheckDistance: 0.8
   whatIsGround:
@@ -12453,7 +12460,7 @@ MonoBehaviour:
   attackCheck: {fileID: 724377845}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 1521517571}
-  groundCheckDistance: 0.4
+  groundCheckDistance: 1
   wallCheck: {fileID: 739933101}
   wallCheckDistance: 0.8
   whatIsGround:
@@ -19241,7 +19248,7 @@ MonoBehaviour:
   attackCheck: {fileID: 205797600}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 378901897}
-  groundCheckDistance: 0.4
+  groundCheckDistance: 1
   wallCheck: {fileID: 991168667}
   wallCheckDistance: 0.8
   whatIsGround:

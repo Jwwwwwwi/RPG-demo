@@ -22,6 +22,7 @@ public class Enemy : Entity
     public float moveSpeed;
     public float idleTime;
     public float battleTime;
+    private float defaultMoveSpeed;
 
     [Header("Attack info")]
     public float attackDistance;
@@ -33,6 +34,7 @@ public class Enemy : Entity
     protected override void Awake()
     {
         base.Awake();
+        defaultMoveSpeed = moveSpeed;
         stateMachine = new EnemyStateMachine();
     }
 
@@ -57,6 +59,8 @@ public class Enemy : Entity
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance * facingDir, transform.position.y));
     }
 
+    #region Counter Attack Window
+    // 通过动画触发器事件设置允许反击的窗口，玩家进入反击状态时检测敌人是否允许被反击，再设置被反击的行为
     public virtual void OpenCounterAttackWindow()
     {
         canBeStunned = true;
@@ -68,7 +72,31 @@ public class Enemy : Entity
         canBeStunned = false;
         counterImage.SetActive(false);
     }
+    #endregion
 
+    // 冻结敌人动画的移动
+    public virtual void FreezeTime(bool _timeFrozen)
+    {
+        if (_timeFrozen)
+        {
+            moveSpeed = 0;
+            anim.speed = 0;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+            anim.speed = 1;
+        }
+    }
+    // 使用协程冻结一段时间
+    protected virtual IEnumerator FreezeTimeFor(float _seconds)
+    {
+        FreezeTime(true);
+        yield return new WaitForSeconds(_seconds);
+        FreezeTime(false);
+    }
+
+    // 由玩家调用，子类可以复写不同的被反击的行为
     public virtual bool CanBeStunned()
     {
         if (canBeStunned)
