@@ -13,11 +13,15 @@ public class SwordSkillController : MonoBehaviour
     private bool isReturning;
     [SerializeField] private float returnSpeed = 12;
 
+    [Header("Pierce info")]
+    [SerializeField] private float pierceAmount;
 
-    public float bounceSpeed;
-    public bool isBouncing = true;
-    public int amountOfBounce = 4;
-    public List<Transform> enemyTarget;
+
+    [Header("Bounce info")]
+    [SerializeField] private float bounceSpeed;
+    private bool isBouncing;
+    private int bounceAmount;
+    private List<Transform> enemyTarget;
     private int targetIndex;
 
     private void Awake()
@@ -33,7 +37,21 @@ public class SwordSkillController : MonoBehaviour
         player = _player;
         rb.velocity = _dir;
         rb.gravityScale = _gravityScale;
-        anim.SetBool("Rotation", true);
+        
+        if (pierceAmount <= 0)
+            anim.SetBool("Rotation", true);
+    }
+
+    public void SetupBounce(bool _isBouncing, int _amountOfBounces)
+    {
+        isBouncing = _isBouncing;
+        bounceAmount = _amountOfBounces;
+        enemyTarget = new List<Transform>();
+    }
+
+    public void SetupPierce(int _pierceAmount)
+    {
+        pierceAmount = _pierceAmount;
     }
 
     public void ReturnSword()
@@ -57,6 +75,11 @@ public class SwordSkillController : MonoBehaviour
                 player.CatchTheSword();
         }
 
+        BounceLogic();
+    }
+
+    private void BounceLogic()
+    {
         if (isBouncing && enemyTarget.Count > 0)
         {
             transform.position = Vector2.MoveTowards(transform.position, enemyTarget[targetIndex].position, bounceSpeed * Time.deltaTime);
@@ -64,8 +87,8 @@ public class SwordSkillController : MonoBehaviour
             if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < .1f)
             {
                 targetIndex++;
-                amountOfBounce--;
-                if (amountOfBounce <= 0)
+                bounceAmount--;
+                if (bounceAmount <= 0)
                 {
                     isBouncing = false;
                     isReturning = true;
@@ -81,6 +104,8 @@ public class SwordSkillController : MonoBehaviour
     {
         if (isReturning)
             return;
+
+        collision.GetComponent<Enemy>()?.Damage(); // 语法糖
 
         if (collision.GetComponent<Enemy>() != null)
         {
@@ -103,6 +128,13 @@ public class SwordSkillController : MonoBehaviour
 
     private void StuckInto(Collider2D collision)
     {
+        if (pierceAmount > 0 && collision.GetComponent<Enemy>() != null)
+        {
+            pierceAmount--;
+            return;
+        }
+
+
         canRotate = false;
         cd.enabled = false;
         rb.isKinematic = true;
