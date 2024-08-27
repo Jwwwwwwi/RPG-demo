@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -24,6 +25,7 @@ public class Entity : MonoBehaviour
     public Animator anim {get; private set;}
     public Rigidbody2D rb {get; private set;}
     public EntityFX fx {get; private set;}
+    public SpriteRenderer sr {get; private set;}
     #endregion
 
     public int facingDir {get; private set;} = 1;
@@ -37,6 +39,7 @@ public class Entity : MonoBehaviour
     // 获取动画组件和刚体组件
     protected virtual void Start()
     {
+        sr = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         fx = GetComponent<EntityFX>();
@@ -117,5 +120,12 @@ public class Entity : MonoBehaviour
     }
     #endregion
     
+    public void MakeTransprent(bool _transprent)
+    {
+        if (_transprent)
+            sr.color = Color.clear;
+        else
+            sr.color = Color.white;
+    }
 }
 

@@ -14,12 +14,12 @@ public class CloneSkillController : MonoBehaviour
     [SerializeField] private float attackCheckRadius = .8f;
     private Transform closestEnemy;
 
-    public void SetupClone(Transform _newtransform, float _cloneDuration, bool _canAttack)
+    public void SetupClone(Transform _newtransform, float _cloneDuration, bool _canAttack, Vector3 _offset)
     {
         
         if (_canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1,4));
-        transform.position = _newtransform.position;
+        transform.position = _newtransform.position + _offset;
         cloneTimer = _cloneDuration;
 
         FaceClosestTarget();

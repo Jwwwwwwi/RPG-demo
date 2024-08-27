@@ -41,6 +41,7 @@ public class Player : Entity
     public PlayerCounterAttackState counterAttack {get; private set;}
     public PlayerAimSwordState aimSwordState {get; private set;}
     public PlayerCatchSwordState catchSwordState {get; private set;}
+    public PlayerBlackholeState blackholeState {get; private set;}
     #endregion
 
     // 设置状态机和初始状态
@@ -58,6 +59,7 @@ public class Player : Entity
         counterAttack = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
         aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
         catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
+        blackholeState = new PlayerBlackholeState(this, stateMachine, "Jump");
     }
 
     // 状态机初始化
