@@ -11375,6 +11375,7 @@ GameObject:
   - component: {fileID: 1308503741}
   - component: {fileID: 1308503742}
   - component: {fileID: 1308503743}
+  - component: {fileID: 1308503744}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -11395,6 +11396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 1
+  cooldownTimer: 0
 --- !u!114 &1308503739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11435,6 +11437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  cooldownTimer: 0
   clonePrefab: {fileID: 415511898261512778, guid: faae0b8d0f7effb45866dc265276d4f7, type: 3}
   cloneDuration: 1
   canAttack: 1
@@ -11451,6 +11454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  cooldownTimer: 0
   swordType: 0
   bounceAmount: 4
   bounceGravity: 1
@@ -11483,6 +11487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  cooldownTimer: 0
   amountOfAttacks: 2
   cloneCooldown: 0.35
   blackholeDuration: 2
@@ -11490,6 +11495,33 @@ MonoBehaviour:
   maxSize: 15
   growSpeed: 3
   shrinkSpeed: 6
+--- !u!114 &1308503744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308503737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c799d1385aad8f84ca3d1ecbc5c9419b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  cooldownTimer: 0
+  crystalDuration: 1.5
+  crystalPrefab: {fileID: 1300561559811633156, guid: 0e27cbd11d521864383a0a94e5457d9d, type: 3}
+  canExplode: 1
+  canMove: 1
+  moveSpeed: 4
+  canUseMultiStacks: 1
+  amountOfStacks: 3
+  multiStackCooldown: 4
+  useTimeWindow: 2.5
+  crystalLeft:
+  - {fileID: 1300561559811633156, guid: 0e27cbd11d521864383a0a94e5457d9d, type: 3}
+  - {fileID: 1300561559811633156, guid: 0e27cbd11d521864383a0a94e5457d9d, type: 3}
+  - {fileID: 1300561559811633156, guid: 0e27cbd11d521864383a0a94e5457d9d, type: 3}
 --- !u!1 &1315013302
 GameObject:
   m_ObjectHideFlags: 0
