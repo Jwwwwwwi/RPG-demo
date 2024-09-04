@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 // 反击状态
 public class PlayerCounterAttackState : PlayerState
 {
+    private bool canCreateClone;
+
     public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }
@@ -12,6 +15,7 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        canCreateClone = true;
         stateTimer = player.counterAttackDuration;
         player.anim.SetBool("SuccessfulCounterAttack", false);
     }
@@ -36,6 +40,11 @@ public class PlayerCounterAttackState : PlayerState
                 {
                     stateTimer = 10; // 大于1的数即可，保证成功反击动画播放结束由动画触发器退出
                     player.anim.SetBool("SuccessfulCounterAttack", true);
+                    if (canCreateClone)
+                    {
+                        canCreateClone = false;
+                        player.skill.clone.CreateCloneOnCounterAttack(hit.transform);
+                    }
 
                 }
             }

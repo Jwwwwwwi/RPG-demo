@@ -5,7 +5,7 @@ using UnityEngine;
 public class Skill : MonoBehaviour
 {
     [SerializeField] protected float cooldown;
-    [SerializeField] protected float cooldownTimer;
+    protected float cooldownTimer;
 
     protected Player player;
 

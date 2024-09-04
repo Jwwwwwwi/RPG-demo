@@ -7,6 +7,9 @@ public class CrystalSkill : Skill
     [SerializeField] private float crystalDuration;
     [SerializeField] private GameObject crystalPrefab;
 
+    [Header("Crystal mirage")]
+    [SerializeField] private bool cloneInsteadOfCrystal;
+
     [Header("Explosive crystal")]
     [SerializeField] private bool canExplode;
 
@@ -34,11 +37,8 @@ public class CrystalSkill : Skill
 
         if (currentCrystal == null)
         {
-            currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
-            CrystalSkillController currentCrystalScript = currentCrystal.GetComponent<CrystalSkillController>();
+            CreateCrystal();
 
-            currentCrystalScript.SetupCrystal(crystalDuration, canExplode, canMove, moveSpeed, FindClosestEnemy(currentCrystal.transform));
-    
         }
         else
         {
@@ -46,13 +46,32 @@ public class CrystalSkill : Skill
                 return;
 
             Vector2 playerPos = player.transform.position;
-
             player.transform.position = currentCrystal.transform.position;
             currentCrystal.transform.position = playerPos;
 
-            currentCrystal.GetComponent<CrystalSkillController>()?.FinishCrystal();
+            if (cloneInsteadOfCrystal)
+            {
+                SkillManager.instance.clone.CreatClone(currentCrystal.transform, Vector3.zero);
+                Destroy(currentCrystal);
+            }
+            else
+            {
+                currentCrystal.GetComponent<CrystalSkillController>()?.FinishCrystal();
+            }
         }
     }
+
+    public void CreateCrystal()
+    {
+        currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
+        CrystalSkillController currentCrystalScript = currentCrystal.GetComponent<CrystalSkillController>();
+
+        currentCrystalScript.SetupCrystal(crystalDuration, canExplode, canMove, moveSpeed, FindClosestEnemy(currentCrystal.transform));
+        
+    }
+
+    // 从target列表中随机选择一个目标
+    public void CurrentCrystalChooseRandomTarget<T> (List<T> _targets) => currentCrystal.GetComponent<CrystalSkillController>().ChooseRandomEnemy(_targets);
 
     private bool canUseMultiCrystal()
     {

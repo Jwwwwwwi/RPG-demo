@@ -18,6 +18,7 @@ public class CrystalSkillController : MonoBehaviour
     private float growSpeed = 5;
 
     private Transform closestEnemy;
+    [SerializeField] private LayerMask whatIsEnemy;
 
     public void SetupCrystal(float _crystalExistTimer, bool _canExplode, bool _canMove, float _moveSpeed, Transform _closestEnemy)
     {
@@ -75,5 +76,11 @@ public class CrystalSkillController : MonoBehaviour
 
     public void SelfDestory() => Destroy(gameObject);
 
-
+    // 从target列表中随机选择一个目标
+    public void ChooseRandomEnemy<T> (List<T> _targets)
+    {
+        List<Transform> targets = _targets as List<Transform>;
+        if (targets.Count > 0)
+            closestEnemy = targets[Random.Range(0 ,_targets.Count)];
+    }
 }

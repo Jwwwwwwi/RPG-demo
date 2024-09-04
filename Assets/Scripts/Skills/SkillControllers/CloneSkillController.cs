@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // 复制体控制器，用于控制生成的复制体位置、颜色等信息
 public class CloneSkillController : MonoBehaviour
@@ -12,18 +13,20 @@ public class CloneSkillController : MonoBehaviour
     private float cloneTimer;
     [SerializeField] private Transform attackCheck;
     [SerializeField] private float attackCheckRadius = .8f;
-    private Transform closestEnemy;
+    private bool canDuplicateClone;
+    private float chanceToDuplicate;
+    private int facingDir = 1;
+    // private Transform closestEnemy;
 
-    public void SetupClone(Transform _newtransform, float _cloneDuration, bool _canAttack, Vector3 _offset, Transform _closestEnemy)
+    public void SetupClone(Transform _newtransform, float _cloneDuration, bool _canAttack, Vector3 _offset, bool _canDuplicateClone, float _chanceToDuplicate)
     {
         
         if (_canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1,4));
         transform.position = _newtransform.position + _offset;
         cloneTimer = _cloneDuration;
-        closestEnemy = _closestEnemy;
-
-        FaceClosestTarget();
+        canDuplicateClone = _canDuplicateClone;
+        chanceToDuplicate = _chanceToDuplicate;
 
     }
 
@@ -57,18 +60,29 @@ public class CloneSkillController : MonoBehaviour
         foreach(var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)
+            {
                 hit.GetComponent<Enemy>().Damage();
+
+                if (canDuplicateClone)
+                {
+                    if (Random.Range(0, 100) < chanceToDuplicate)
+                    {
+                        SkillManager.instance.clone.CreatClone(hit.transform, new Vector3(1 * facingDir , 0));
+                    }
+                }
+            }
         }
     }
 
-    private void FaceClosestTarget()
+    public void FaceClosestTarget(Transform _closestEnemy)
     {
         
-        if (closestEnemy != null)
+        if (transform.position.x > _closestEnemy.position.x)
         {
-            if (transform.position.x > closestEnemy.position.x)
-                transform.Rotate(0, 180, 0);
+            facingDir = -1;
+            transform.Rotate(0, 180, 0);
         }
+        
     }
 
 

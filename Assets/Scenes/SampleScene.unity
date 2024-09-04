@@ -11396,7 +11396,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 1
-  cooldownTimer: 0
 --- !u!114 &1308503739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11437,10 +11436,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  cooldownTimer: 0
   clonePrefab: {fileID: 415511898261512778, guid: faae0b8d0f7effb45866dc265276d4f7, type: 3}
   cloneDuration: 1
   canAttack: 1
+  createCloneOnDashStart: 1
+  createCloneOnDashOver: 1
+  createCloneOnCounterAttack: 1
+  canDuplicateClone: 1
+  chanceToDuplicate: 20
+  crystalInsteadOfClone: 1
 --- !u!114 &1308503742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11454,7 +11458,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  cooldownTimer: 0
   swordType: 0
   bounceAmount: 4
   bounceGravity: 1
@@ -11487,8 +11490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  cooldownTimer: 0
-  amountOfAttacks: 2
+  amountOfAttacks: 12
   cloneCooldown: 0.35
   blackholeDuration: 2
   blackholePrefab: {fileID: 5633176391973541686, guid: 46875c26448a54449a74498c4c686c09, type: 3}
@@ -11508,13 +11510,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  cooldownTimer: 0
   crystalDuration: 1.5
   crystalPrefab: {fileID: 1300561559811633156, guid: 0e27cbd11d521864383a0a94e5457d9d, type: 3}
+  cloneInsteadOfCrystal: 1
   canExplode: 1
   canMove: 1
   moveSpeed: 4
-  canUseMultiStacks: 1
+  canUseMultiStacks: 0
   amountOfStacks: 3
   multiStackCooldown: 4
   useTimeWindow: 2.5
