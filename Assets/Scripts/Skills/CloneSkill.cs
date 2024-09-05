@@ -35,7 +35,7 @@ public class CloneSkill : Skill
         GameObject newClone = Instantiate(clonePrefab);
         // 先设定好克隆体位置，再让他面向最近的敌人
         CloneSkillController newCloneScript = newClone.GetComponent<CloneSkillController>();
-        newCloneScript.SetupClone(_clonePosition, cloneDuration, canAttack, _offset, canDuplicateClone, chanceToDuplicate);
+        newCloneScript.SetupClone(_clonePosition, cloneDuration, canAttack, _offset, canDuplicateClone, chanceToDuplicate, player);
         newCloneScript.FaceClosestTarget(FindClosestEnemy(newClone.transform));
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 // 复制体控制器，用于控制生成的复制体位置、颜色等信息
 public class CloneSkillController : MonoBehaviour
 {
+    private Player player;
     private SpriteRenderer sr;
     private Animator anim;
     [SerializeField] private float colorLoosingSpeed;
@@ -18,7 +19,7 @@ public class CloneSkillController : MonoBehaviour
     private int facingDir = 1;
     // private Transform closestEnemy;
 
-    public void SetupClone(Transform _newtransform, float _cloneDuration, bool _canAttack, Vector3 _offset, bool _canDuplicateClone, float _chanceToDuplicate)
+    public void SetupClone(Transform _newtransform, float _cloneDuration, bool _canAttack, Vector3 _offset, bool _canDuplicateClone, float _chanceToDuplicate, Player _player)
     {
         
         if (_canAttack)
@@ -27,6 +28,7 @@ public class CloneSkillController : MonoBehaviour
         cloneTimer = _cloneDuration;
         canDuplicateClone = _canDuplicateClone;
         chanceToDuplicate = _chanceToDuplicate;
+        player = _player;
 
     }
 
@@ -61,7 +63,7 @@ public class CloneSkillController : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().Damage();
+                player.stats.DoDamage(hit.GetComponent<CharacterStats>());
 
                 if (canDuplicateClone)
                 {

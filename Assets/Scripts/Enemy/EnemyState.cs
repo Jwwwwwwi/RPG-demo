@@ -33,6 +33,7 @@ public class EnemyState
     public virtual void Exit()
     {
         enemy.anim.SetBool(animBoolname, false);
+        enemy.AssignLastAnimBoolName(animBoolname);
     }
 
     public virtual void Update()
