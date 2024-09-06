@@ -66,6 +66,7 @@ public class Enemy : Entity
 
     public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
+    // 玩家检测会穿墙，同一水平线上一直能检测到
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 50, whatIsPlayer);
 
     protected override void OnDrawGizmos()
